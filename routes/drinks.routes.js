@@ -1,3 +1,4 @@
+const fs = require(`fs`);
 const path = require(`path`);
 const express = require(`express`);
 const multer = require(`multer`);
@@ -89,6 +90,60 @@ router.post(`/`, upload.single(`image`), async (req, res) => {
         
     } catch (err) {
         handleError(res, err);
+    }
+})
+
+// Update drink
+router.patch(`/:id`, upload.single(`image`), async (req, res) => {
+
+    try {
+
+        const filteredBody = {
+            name: req.body.name,
+            image: req.file.filename,
+            drinkType: req.body.drinkType,
+            size: req.body.size,
+            available: req.body.available,
+            included: req.body.included
+        }
+
+        const updatedDrink = await Drink.findByIdAndUpdate(req.params.id, filteredBody, {
+            new: true,
+            runValidators: true
+        })
+
+        res.status(200).json({
+            status: 200,
+            data: {
+                drink: updatedDrink
+            }
+        })
+        
+    } catch (err) {
+        handleError(res, err);
+    }
+})
+
+// Delete drink
+router.delete(`/:id`, async (req, res) => {
+
+    try {
+
+        const drink = await Drink.findById(req.params.id);
+
+        fs.unlink(`./img/${drink.image}`, err => {
+
+            if (err) {
+                console.log(err.message);
+            }
+        })
+
+        await Drink.findByIdAndDelete(req.params.id);
+
+        res.status(204).json(null);
+        
+    } catch (err) {
+        handleError(res, err)
     }
 })
 
