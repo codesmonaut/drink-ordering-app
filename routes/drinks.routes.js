@@ -4,7 +4,6 @@ const express = require(`express`);
 const multer = require(`multer`);
 
 const Drink = require(`../models/Drink`);
-const ErrorResponse = require(`../utils/ErrorResponse`);
 const handleError = require(`../utils/handleError`);
 
 
