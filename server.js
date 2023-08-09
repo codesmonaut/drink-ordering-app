@@ -7,6 +7,7 @@ const cookieParser = require(`cookie-parser`);
 
 const drinkRouter = require(`./routes/drinks.routes`);
 const authRouter = require(`./routes/auth.routes`);
+const userRouter = require(`./routes/users.routes`);
 
 // APP CONFIG
 const app = express();
@@ -28,6 +29,7 @@ mongoose.connect(database).then(() => console.log(`Connected to database`));
 // API ENDPOINTS
 app.use(`/api/v1/drinks`, drinkRouter);
 app.use(`/api/v1/auth`, authRouter);
+app.use(`/api/v1/users`, userRouter);
 
 // LISTENER
 app.listen(port, () => {
