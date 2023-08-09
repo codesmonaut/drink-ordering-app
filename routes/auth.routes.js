@@ -1,3 +1,4 @@
+const crypto = require(`crypto`);
 const express = require(`express`);
 const jwt = require(`jsonwebtoken`);
 const rateLimit = require(`express-rate-limit`);
@@ -7,6 +8,7 @@ const ErrorResponse = require(`../utils/ErrorResponse`);
 const handleError = require(`../utils/handleError`);
 const loginLimit = require(`../config/loginLimit`);
 const protect = require(`../middlewares/protect`);
+const ResetToken = require(`../models/ResetToken`);
 
 // ROUTER CONFIG
 const router = express.Router();
@@ -126,12 +128,14 @@ router.post(`/forgotPassword`, async (req, res) => {
             return handleError(res, new ErrorResponse(400, message));
         }
 
-        const resetToken = jwt.sign({ id: user._id }, process.env.RESET_TOKEN_SECRET_KEY, {
-            algorithm: process.env.RESET_TOKEN_ALGORITHM,
-            expiresIn: process.env.RESET_TOKEN_EXPIRE_DATE
-        })
+        const resetTokenData = {
+            userId: user._id,
+            createdAt: Date.now()
+        }
 
-        const link = `${process.env.BASE_URL}${process.env.PORT}/api/v1/auth/resetPassword/${resetToken}`;
+        const resetToken = await ResetToken.create(resetTokenData);
+
+        const link = `${process.env.BASE_URL}${process.env.PORT}/api/v1/auth/resetPassword/${resetToken.token}`;
 
         console.log(`\nMail to: ${user.firstName} ${user.lastName}\n\nContent: ${link}`);
 
@@ -151,15 +155,9 @@ router.patch(`/resetPassword/:token`, async (req, res) => {
     try {
 
         const token = req.params.token;
-
-        const decoded = jwt.verify(token, process.env.RESET_TOKEN_SECRET_KEY);
-
-        if (!decoded) {
-            const message = `Token has expired.`;
-            return handleError(res, new ErrorResponse(401, message));
-        }
-
-        const user = await User.findById(decoded.id);
+        const encryptedToken = crypto.createHash(`sha256`).update(token).digest(`hex`);
+        const resetToken = await ResetToken.findOne({ encryptedToken: encryptedToken });
+        const user = await User.findById(resetToken.userId);
 
         if (req.body.password !== req.body.passwordConfirm) {
             const message = `Password and password confirm must match.`;
