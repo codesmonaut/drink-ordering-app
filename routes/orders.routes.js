@@ -1,8 +1,6 @@
 const express = require(`express`);
 
 const Order = require(`../models/Order`);
-const Drink = require(`../models/Drink`);
-const User = require(`../models/User`);
 const ErrorResponse = require(`../utils/ErrorResponse`);
 const handleError = require(`../utils/handleError`);
 const protect = require(`../middlewares/protect`);
@@ -93,6 +91,10 @@ router.get(`/:id`, async (req, res) => {
 router.delete(`/:id`, async (req, res) => {
 
     try {
+
+        await Order.findByIdAndDelete(req.params.id);
+
+        res.status(204).json(null);
         
     } catch (err) {
         handleError(res, err);
