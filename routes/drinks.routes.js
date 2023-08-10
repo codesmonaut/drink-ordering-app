@@ -5,6 +5,8 @@ const multer = require(`multer`);
 
 const Drink = require(`../models/Drink`);
 const handleError = require(`../utils/handleError`);
+const protect = require(`../middlewares/protect`);
+const restrict = require(`../middlewares/restrict`);
 
 
 
@@ -63,6 +65,12 @@ router.get(`/:id`, async (req, res) => {
         handleError(res, err);
     }
 })
+
+// ROUTE PROTECTION MIDDLEWARE
+router.use(protect);
+
+// ROUTE RESTRICTION MIDDLEWARE
+router.use(restrict);
 
 // Create drink
 router.post(`/`, upload.single(`image`), async (req, res) => {
