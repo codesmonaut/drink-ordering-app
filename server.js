@@ -8,6 +8,7 @@ const cookieParser = require(`cookie-parser`);
 const drinkRouter = require(`./routes/drinks.routes`);
 const authRouter = require(`./routes/auth.routes`);
 const userRouter = require(`./routes/users.routes`);
+const orderRouter = require(`./routes/orders.routes`);
 
 // APP CONFIG
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connect(database).then(() => console.log(`Connected to database`));
 app.use(`/api/v1/drinks`, drinkRouter);
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, userRouter);
+app.use(`/api/v1/orders`, orderRouter);
 
 // LISTENER
 app.listen(port, () => {
