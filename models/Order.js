@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         required: true
     },
-    sizeOption: {
+    size: {
         type: String,
         required: [true, `User must define size option.`]
     },

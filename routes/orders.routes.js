@@ -20,7 +20,7 @@ router.post(`/`, async (req, res) => {
         const filteredBody = {
             drinkId: req.body.drinkId,
             userId: req.currentUserId,
-            sizeOption: req.body.sizeOption,
+            size: req.body.size,
             store: req.body.store,
             flavours: req.body.flavours
         }
