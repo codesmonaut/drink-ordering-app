@@ -10,10 +10,14 @@ const storeSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: [true `Store must have an address.`],
+        required: [true, `Store must have an address.`],
         unique: true,
         minlength: 3,
         maxlength: 100
+    },
+    phone: {
+        type: String,
+        required: [true, `Store must have a phone number.`]
     },
     businessHours: {
         type: String,

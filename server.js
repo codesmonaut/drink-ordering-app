@@ -9,6 +9,7 @@ const drinkRouter = require(`./routes/drinks.routes`);
 const authRouter = require(`./routes/auth.routes`);
 const userRouter = require(`./routes/users.routes`);
 const orderRouter = require(`./routes/orders.routes`);
+const storeRouter = require(`./routes/stores.routes`);
 
 // APP CONFIG
 const app = express();
@@ -32,6 +33,7 @@ app.use(`/api/v1/drinks`, drinkRouter);
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/orders`, orderRouter);
+app.use(`/api/v1/stores`, storeRouter);
 
 // LISTENER
 app.listen(port, () => {
