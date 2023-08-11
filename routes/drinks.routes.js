@@ -100,14 +100,13 @@ router.post(`/`, upload.single(`image`), async (req, res) => {
     }
 })
 
-// Update drink
-router.patch(`/:id`, upload.single(`image`), async (req, res) => {
+// Update Drink
+router.patch(`/:id`, async (req, res) => {
 
     try {
 
         const filteredBody = {
             name: req.body.name,
-            image: req.file.filename,
             drinkType: req.body.drinkType,
             size: req.body.size,
             available: req.body.available,
@@ -151,6 +150,32 @@ router.delete(`/:id`, async (req, res) => {
         
     } catch (err) {
         handleError(res, err)
+    }
+})
+
+// Change image
+router.patch(`/changeImage/:id`, upload.single(`image`), async (req, res) => {
+
+    try {
+
+        const filteredBody = {
+            image: req.file.filename
+        }
+
+        const updatedDrink = await Drink.findByIdAndUpdate(req.params.id, filteredBody, {
+            new: true,
+            runValidators: true
+        })
+
+        res.status(200).json({
+            status: 200,
+            data: {
+                drink: updatedDrink
+            }
+        })
+        
+    } catch (err) {
+        handleError(res, err);
     }
 })
 

@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
         minlength: [6, `Password must have more than 6 characters.`],
         maxlength: [30, `Password must have less than 30 characters.`]
     },
+    phone: {
+        type: String,
+        required: [true, `User must have a phone number.`]
+    },
     orders: {
         type: Number,
         default: 0

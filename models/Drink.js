@@ -24,11 +24,18 @@ const drinkSchema = new mongoose.Schema({
     },
     available: {
         type: Array,
-        default: [ `no available` ]
+        default: `no available`
     },
     included: {
         type: Array,
         default: [ 'nothing included' ]
+    },
+    flavours: {
+        type: Object,
+        default: {
+            syrup: 0,
+            ice: true
+        }
     }
 })
 

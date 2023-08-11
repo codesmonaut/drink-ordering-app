@@ -51,6 +51,7 @@ router.patch(`/updateAccount`, async (req, res) => {
         const filteredBody = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
+            phone: req.body.phone,
             lat: req.body.lat,
             lon: req.body.lon
         }
@@ -149,6 +150,7 @@ router.patch(`/:id`, async (req, res) => {
         const filteredBody = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
+            phone: req.body.phone,
             lat: req.body.lat,
             lon: req.body.lon
         }

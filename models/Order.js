@@ -9,13 +9,13 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         required: true
     },
+    storeId: {
+        type: mongoose.Schema.ObjectId,
+        required: [true, `User must pick a store.`]
+    },
     size: {
         type: String,
         required: [true, `User must define size option.`]
-    },
-    store: {
-        type: String,
-        required: [true, `User must pick a store.`]
     },
     flavours: {
         type: Object,

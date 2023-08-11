@@ -23,6 +23,7 @@ router.post(`/register`, async (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
+            phone: req.body.phone,
             lat: req.body.lat,
             lon: req.body.lon
         }
