@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, `User must have a phone number.`]
+        required: [true, `User must have a phone number.`],
+        unique: true,
+        maxlength: [11, `Phone number must have 11 characters`],
+        minlength: [11, `Phone number must have 11 characters`]
     },
     orders: {
         type: Number,
