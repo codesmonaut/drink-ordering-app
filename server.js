@@ -15,6 +15,8 @@ const userRouter = require(`./routes/users.routes`);
 const orderRouter = require(`./routes/orders.routes`);
 const storeRouter = require(`./routes/stores.routes`);
 const serverLimit = require(`./config/serverLimit`);
+const ErrorResponse = require(`./utils/ErrorResponse`);
+const handleError = require(`./utils/handleError`);
 
 // APP CONFIG
 const app = express();
@@ -43,6 +45,10 @@ app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/orders`, orderRouter);
 app.use(`/api/v1/stores`, storeRouter);
+
+app.all(`*`, (req, res) => {
+    handleError(res, new ErrorResponse(404, `Page ${req.originalUrl} not found.`));
+})
 
 // LISTENER
 app.listen(port, () => {
