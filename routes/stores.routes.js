@@ -64,8 +64,7 @@ router.post(`/`, async (req, res) => {
             address: req.body.address,
             phone: req.body.phone,
             businessHours: req.body.businessHours,
-            lat: req.body.lat,
-            lon: req.body.lon
+            geometry: req.body.geometry
         }
 
         const newStore = await Store.create(filteredBody);
@@ -87,7 +86,7 @@ router.patch(`/:id`, async (req, res) => {
 
     try {
 
-        if (req.body.address || req.body.lat || req.body.lon) {
+        if (req.body.address || req.body.geometry) {
             const message = `This route is only for updating name and business hours. If you want to change location create new store.`;
             return handleError(res, new ErrorResponse(400, message));
         }

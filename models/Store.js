@@ -1,5 +1,7 @@
 const mongoose = require(`mongoose`);
 
+const geoSchema = require(`../utils/geoSchema`);
+
 const storeSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -23,14 +25,7 @@ const storeSchema = new mongoose.Schema({
         type: String,
         required: [true, `Store must have defined business hours.`]
     },
-    lat: {
-        type: Number,
-        required: [true, `Store must have latitude defined.`]
-    },
-    lon: {
-        type: Number,
-        required: [true, `Store must have longitude defined.`]
-    }
+    geometry: geoSchema
 })
 
 const Store = mongoose.model(`Store`, storeSchema);
