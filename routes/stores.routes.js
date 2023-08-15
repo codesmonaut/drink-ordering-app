@@ -128,4 +128,36 @@ router.delete(`/:id`, async (req, res) => {
     }
 })
 
+// Find nearest store
+router.post(`/nearestStore`, async (req, res) => {
+
+    try {
+
+        const lat = req.body.lat;
+        const lon = req.body.lon;
+
+        const nearestStore = await Store.aggregate([{
+            $geoNear: {
+                near: {
+                    type: "Point",
+                    coordinates: [lat, lon]
+                },
+                distanceField: `distance`
+            }
+        },
+        { $limit: 1 }
+        ])
+
+        res.status(200).json({
+            status: 200,
+            data: {
+                store: nearestStore
+            }
+        })
+        
+    } catch (err) {
+        handleError(res, err);
+    }
+})
+
 module.exports = router;

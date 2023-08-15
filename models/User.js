@@ -35,18 +35,6 @@ const userSchema = new mongoose.Schema({
         maxlength: [11, `Phone number must have 11 characters`],
         minlength: [11, `Phone number must have 11 characters`]
     },
-    orders: {
-        type: Number,
-        default: 0
-    },
-    lat: {
-        type: Number,
-        default: null
-    },
-    lon: {
-        type: Number,
-        default: null
-    },
     isAdmin: {
         type: Boolean,
         default: false
