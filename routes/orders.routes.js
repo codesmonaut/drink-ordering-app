@@ -45,6 +45,26 @@ router.patch(`/:id`, (req, res) => {
     handleError(res, new ErrorResponse(400, message));
 })
 
+// Get account orders
+router.get(`/accountOrders`, async (req, res) => {
+
+    try {
+
+        const orders = await Order.find({ userId: req.currentUserId });
+
+        res.status(200).json({
+            status: 200,
+            results: orders.length,
+            data: {
+                orders: orders
+            }
+        })
+        
+    } catch (err) {
+        handleError(res, err);
+    }
+})
+
 // ROUTE RESTRICTION
 router.use(restrict);
 
